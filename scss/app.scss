@@ -1,0 +1,13 @@
+$mainBackgroundColor: #303f56;
+
+
+body {
+    background-color: $mainBackgroundColor;
+}
+
+#searchBox {
+    display: block;
+    margin: 0 auto;
+    width: 70%;
+    height: 40px;
+}
