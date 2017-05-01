@@ -1,13 +1,25 @@
 $mainBackgroundColor: #303f56;
-
-
 body {
     background-color: $mainBackgroundColor;
+    box-sizing:border-box;
+    text-align: center;
+}
+
+input{
+    vertical-align: top;
 }
 
 #searchBox {
-    display: block;
     margin: 0 auto;
+    display: inline-block;
+    overflow: hidden;
     width: 70%;
     height: 40px;
+}
+
+#searchButton{
+    margin: 0 auto;
+    display: inline-block;
+    width: 80px;
+    height: 46px;
 }

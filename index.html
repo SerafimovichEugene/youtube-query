@@ -14,3 +14,33 @@
 </body>
 
 </html>
+
+
+
+    <!--<script>
+        function start() {
+
+            gapi.client.init({
+                'apiKey': 'AIzaSyDoT9Nw1mPXiXSTAbivHpp7zaXB9cPs6UI',
+                'discoveryDocs': ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"],
+
+            }).then(function () {
+
+                var request = gapi.client.youtube.search.list({
+                    q: "kamikadzedead",
+                    part: 'snippet'
+                });
+                request.execute(function (response) {
+                    var str = JSON.stringify(response.result);
+                    console.log(str);
+                });
+
+            })
+        };
+
+        function loadClient() {
+            gapi.load('client', start);
+        }
+
+    </script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};loadClient()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>-->

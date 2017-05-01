@@ -1,4 +1,9 @@
-import MainPage from './mainPage';
+import SearchElem from './searchElem';
+import YoutubeElems from './youtubeElems';
 
-const mainPage = new MainPage();
+const searchElem = new SearchElem();
+const youtubeElems = new YoutubeElems();
 
+document.addEventListener('gotResponse', () => {
+    youtubeElems.createYoutubeElemsList(searchElem.searchResultList);
+});
