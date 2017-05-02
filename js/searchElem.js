@@ -7,7 +7,7 @@ export default class SearchElem {
         this.searchResultList;
         this.haveData = new Event('gotResponse');
         this.searchButton.addEventListener('click', () => {
-
+            
             if (!this.searchBox.value) {
                 alert('input is empty');
                 return;
@@ -15,6 +15,7 @@ export default class SearchElem {
             search(this.createUrl())
                 .then((response) => {
                     this.searchResultList = JSON.parse(response);
+                    // console.log(this.searchResultList);
                     document.dispatchEvent(this.haveData);
                 })
                 .catch((err) => {
@@ -36,10 +37,10 @@ export default class SearchElem {
 
     createUrl() {
 
-        console.log(this.searchBox.value);
+        // console.log(this.searchBox.value);
         const q = '&q=' + this.searchBox.value;
         const partOfUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyDoT9Nw1mPXiXSTAbivHpp7zaXB9cPs6UI&type=video&order=viewCount';
-        console.log(partOfUrl + q);
+        // console.log(partOfUrl + q);
         return partOfUrl + q;
     }
 

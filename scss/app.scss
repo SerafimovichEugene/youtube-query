@@ -1,6 +1,7 @@
-$mainBackgroundColor: #303f56;
+$mainBackground: #303f56;
+$youtubeElemBackground: #d0d3d8;
 body {
-    background-color: $mainBackgroundColor;
+    background-color: $mainBackground;
     box-sizing:border-box;
     text-align: center;
 }
@@ -22,4 +23,23 @@ input{
     display: inline-block;
     width: 80px;
     height: 46px;
+}
+
+#youtubeElemsWrapper {
+    display: block;
+    padding-top: 50px;
+}
+
+.youtubeElem {
+    display: inline-block;
+    background-color: $youtubeElemBackground;
+    width: 330px;
+    margin: 0 auto;
+    padding: 5px;
+    border-radius: 5px;
+
+    p {
+        margin-bottom: 5px;
+    }
+
 }

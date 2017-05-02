@@ -1,6 +1,5 @@
 .vscode
+app*
 node_modules
-.*
-!/.vscode
 *.log
-bundle.js
+
