@@ -62,34 +62,58 @@ export default class YoutubeElems {
 
     renderYoutubeElemsWrapper() {
 
-        let youtubeElemsWrapper = document.createElement('section');
+        let youtubeElemsWrapper = document.createElement('div');
         youtubeElemsWrapper.id = 'youtubeElemsWrapper';
         document.body.appendChild(youtubeElemsWrapper);
     }
 
     renderYoutubeElems() {
 
-        _.forEach(this.youtubeElems, (elem) => {
-            const youtubeElem = new YoutubeElem(
-                elem.thumbnails.medium.url,
-                elem.title,
-                elem.author,
-                elem.viewCount,
-                elem.publishedAt,
-                elem.description
-            );
-            document.getElementById('youtubeElemsWrapper').appendChild(youtubeElem.renderYoutubeElem());
-        })
+        const chunks = _.chunk(this.youtubeElems, 4);
+        console.log(chunks);
+
+        _.forEach(chunks, (chunk) => {
+
+            let ul = document.createElement('ul');
+
+            _.forEach(chunk, (elem) => {
+                const youtubeElem = new YoutubeElem(
+                    elem.thumbnails.medium.url,
+                    elem.title,
+                    elem.author,
+                    elem.viewCount,
+                    elem.publishedAt,
+                    elem.description
+                );
+                
+                ul.appendChild(youtubeElem.renderYoutubeElem());
+
+            });
+            document.getElementById('youtubeElemsWrapper').appendChild(ul);
+        });
+
+        console.log(document.getElementById('youtubeElemsWrapper').children);
+        // _.forEach(this.youtubeElems, (elem) => {
+        //     const youtubeElem = new YoutubeElem(
+        //         elem.thumbnails.medium.url,
+        //         elem.title,
+        //         elem.author,
+        //         elem.viewCount,
+        //         elem.publishedAt,
+        //         elem.description
+        //     );
+        //     document.getElementById('youtubeElemsWrapper').appendChild(youtubeElem.renderYoutubeElem());
+        // });
     }
+
+
+
     clearYoutubeElemsList() {
 
         this.youtubeElems = [];
-        document.getElementById('youtubeElemsWrapper').innerHTML = "";
-    
+        document.getElementById('youtubeElemsWrapper').innerHTML = '';
     }
 };
-
-
 
 
 class YoutubeElem {
@@ -134,6 +158,8 @@ class YoutubeElem {
         description.innerHTML = this.description;
         youtubeElem.appendChild(description);
 
-        return youtubeElem;
+        let li = document.createElement('li');
+        li.appendChild(youtubeElem);
+        return li;
     }
 }

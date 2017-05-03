@@ -1,4 +1,4 @@
-.vscode
+.vscode*
 app*
 node_modules
 *.log

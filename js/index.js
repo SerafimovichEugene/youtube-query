@@ -4,7 +4,7 @@ import YoutubeElems from './youtubeElems';
 const searchElem = new SearchElem();
 const youtubeElems = new YoutubeElems();
 
-youtubeElems.renderYoutubeElemsWrapper();
+// youtubeElems.renderYoutubeElemsWrapper();
 
 document.addEventListener('gotResponse', () => {
     youtubeElems.clearYoutubeElemsList();

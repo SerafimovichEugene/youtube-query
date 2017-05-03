@@ -39,7 +39,7 @@ export default class SearchElem {
 
         // console.log(this.searchBox.value);
         const q = '&q=' + this.searchBox.value;
-        const partOfUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyDoT9Nw1mPXiXSTAbivHpp7zaXB9cPs6UI&type=video&order=viewCount';
+        const partOfUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyDoT9Nw1mPXiXSTAbivHpp7zaXB9cPs6UI&type=video&maxResults=16';
         // console.log(partOfUrl + q);
         return partOfUrl + q;
     }
