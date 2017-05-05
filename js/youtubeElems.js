@@ -70,7 +70,7 @@ export default class YoutubeElems {
     renderYoutubeElems() {
 
         const chunks = _.chunk(this.youtubeElems, 4);
-        console.log(chunks);
+        // console.log(chunks);
 
         _.forEach(chunks, (chunk) => {
 
@@ -94,7 +94,7 @@ export default class YoutubeElems {
         });
         document.getElementById('youtubeElemsWrapper').firstChild.className = 'currentYoutubeElem';
         
-        console.log(document.getElementById('youtubeElemsWrapper').children);
+        // console.log(document.getElementById('youtubeElemsWrapper').children);
         
     }
 
@@ -103,11 +103,6 @@ export default class YoutubeElems {
         this.youtubeElems = [];
         document.getElementById('youtubeElemsWrapper').innerHTML = '';
     }
-
-    
-
-
-
 
 };
 
@@ -150,8 +145,9 @@ class YoutubeElem {
         publishDate.innerHTML = this.publishDate;
         youtubeElem.appendChild(publishDate);
 
-        let description = document.createElement('p');
+        let description = document.createElement('p');        
         description.innerHTML = this.description;
+        // description.className = 'block-with-text';
         youtubeElem.appendChild(description);
 
         let li = document.createElement('li');

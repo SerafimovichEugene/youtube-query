@@ -4,7 +4,7 @@ import Swipe from './swipe';
 
 const searchElem = new SearchElem();
 const youtubeElems = new YoutubeElems();
-
+let swipeObj;
 // youtubeElems.renderYoutubeElemsWrapper();
 
 document.addEventListener('gotResponse', () => {
@@ -14,8 +14,11 @@ document.addEventListener('gotResponse', () => {
 
 document.addEventListener('gotStatistic', () => {
     youtubeElems.renderYoutubeElems();
+    swipeObj = new Swipe();
+    _.forEach(document.getElementsByTagName('ul'), (value) => {
+        console.log(value);
+        value.addEventListener('click', () => {
+            swipeObj.toLeft();
+        });
+    });
 });
-
-
-
-
