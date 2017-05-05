@@ -1,5 +1,6 @@
 import SearchElem from './searchElem';
 import YoutubeElems from './youtubeElems';
+import Swipe from './swipe';
 
 const searchElem = new SearchElem();
 const youtubeElems = new YoutubeElems();
@@ -14,3 +15,7 @@ document.addEventListener('gotResponse', () => {
 document.addEventListener('gotStatistic', () => {
     youtubeElems.renderYoutubeElems();
 });
+
+
+
+

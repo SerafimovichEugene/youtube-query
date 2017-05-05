@@ -89,30 +89,26 @@ export default class YoutubeElems {
                 ul.appendChild(youtubeElem.renderYoutubeElem());
 
             });
+            
             document.getElementById('youtubeElemsWrapper').appendChild(ul);
         });
-
+        document.getElementById('youtubeElemsWrapper').firstChild.className = 'currentYoutubeElem';
+        
         console.log(document.getElementById('youtubeElemsWrapper').children);
-        // _.forEach(this.youtubeElems, (elem) => {
-        //     const youtubeElem = new YoutubeElem(
-        //         elem.thumbnails.medium.url,
-        //         elem.title,
-        //         elem.author,
-        //         elem.viewCount,
-        //         elem.publishedAt,
-        //         elem.description
-        //     );
-        //     document.getElementById('youtubeElemsWrapper').appendChild(youtubeElem.renderYoutubeElem());
-        // });
+        
     }
-
-
 
     clearYoutubeElemsList() {
 
         this.youtubeElems = [];
         document.getElementById('youtubeElemsWrapper').innerHTML = '';
     }
+
+    
+
+
+
+
 };
 
 
