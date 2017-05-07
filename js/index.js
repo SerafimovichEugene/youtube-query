@@ -5,7 +5,8 @@ import Swipe from './swipe';
 const searchElem = new SearchElem();
 const youtubeElems = new YoutubeElems();
 let swipeObj;
-// youtubeElems.renderYoutubeElemsWrapper();
+
+youtubeElems.renderYoutubeElemsWrapper();
 
 document.addEventListener('gotResponse', () => {
     youtubeElems.clearYoutubeElemsList();
@@ -16,9 +17,9 @@ document.addEventListener('gotStatistic', () => {
     youtubeElems.renderYoutubeElems();
     swipeObj = new Swipe();
     _.forEach(document.getElementsByTagName('ul'), (value) => {
-        console.log(value);
-        value.addEventListener('click', () => {
-            swipeObj.toLeft();
-        });
+        swipeObj.addMultipleListeners(value, 'mousedown touchstart', () => {swipeObj.swipeStart()});
+        swipeObj.addMultipleListeners(value, 'mousemove touchmove', () => {swipeObj.swipeMove()});
+        swipeObj.addMultipleListeners(value, 'mouseup touchend', () => {swipeObj.swipeEnd()});
+
     });
 });

@@ -4,24 +4,35 @@ export default class SearchElem {
 
     constructor() {
         this.renderSearchBox();
+
         this.searchResultList;
         this.haveData = new Event('gotResponse');
+
         this.searchButton.addEventListener('click', () => {
-            
-            if (!this.searchBox.value) {
-                alert('input is empty');
-                return;
-            }
-            search(this.createUrl())
-                .then((response) => {
-                    this.searchResultList = JSON.parse(response);
-                    // console.log(this.searchResultList);
-                    document.dispatchEvent(this.haveData);
-                })
-                .catch((err) => {
-                    console.log(err.statusText);
-                });
+            this.makeRequest();
         });
+
+        this.searchBox.addEventListener('keypress', (event) => {
+            if(event.keyCode == '13') {
+                this.makeRequest();
+            }            
+        });
+    }
+
+    makeRequest() {
+        if (!this.searchBox.value) {
+            alert('input is empty');
+            return;
+        }
+        search(this.createUrl())
+            .then((response) => {
+                this.searchResultList = JSON.parse(response);
+                // console.log(this.searchResultList);
+                document.dispatchEvent(this.haveData);
+            })
+            .catch((err) => {
+                console.log(err.statusText);
+            });
     }
 
     renderSearchBox() {
@@ -30,6 +41,7 @@ export default class SearchElem {
         this.searchButton = document.createElement('input');
         this.searchBox.id = 'searchBox';
         this.searchButton.type = 'button';
+        this.searchButton.value = 'Search';
         this.searchButton.id = 'searchButton';
         document.body.appendChild(this.searchBox);
         document.body.appendChild(this.searchButton);

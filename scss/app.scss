@@ -17,14 +17,18 @@ input {
     display: inline-block;
     overflow: hidden;
     width: 70%;
-    height: 40px;
+    font-size: 14pt;
+    border-radius: 5px;
+    border: 1px solid black;
 }
 
 #searchButton {
     margin: 0 auto;
     display: inline-block;
     width: 80px;
-    height: 46px;
+    font-size: 14pt;
+    border-radius: 5px;
+    border: 1px solid black;
 }
 
 #youtubeElemsWrapper {
