@@ -1,7 +1,6 @@
 @import 'multiLine-ellipsis';
 $mainBackground: #303f56;
 $youtubeElemBackground: #d0d3d8;
-
 body {
     background-color: $mainBackground;
     box-sizing: border-box;
@@ -34,20 +33,21 @@ input {
 #youtubeElemsWrapper {
     margin: 10px auto;
     position: relative;
+    height: 500px;
 }
 
 ul {
     position: absolute;
     width: 100%;
     left: 0;
+    padding-left: 0;
     overflow: hidden;
     text-align: center;
     list-style-type: none;
     li {
         display: inline-block;
         vertical-align: top;
-        padding: 20px; 
-        // width: 25%;
+        padding: 10px; // width: 25%;
         // max-width: 330px; 
         transform: translateX(600%);
         transition: opacity 0.2s linear;
@@ -97,30 +97,34 @@ ul {
 }
 
 .moveFromRight li {
-	animation: moveFromRight 350ms ease-in-out both;
+    animation: moveFromRight 350ms ease-in-out both;
 }
 
 .moveFromLeft li {
-	animation: moveFromLeft 350ms ease-in-out both;
+    animation: moveFromLeft 350ms ease-in-out both;
 }
 
 .moveToRight li {
-	animation: moveToRight 350ms ease-in-out both;
+    animation: moveToRight 350ms ease-in-out both;
 }
 
 .moveToLeft li {
-	animation: moveToLeft 350ms ease-in-out both;
+    animation: moveToLeft 350ms ease-in-out both;
 }
 
 .youtubeElem {
     display: block;
     background-color: $youtubeElemBackground;
-    width: 330px; 
-    // height: 480px;
-    margin: 10px;
+    width: 330px; // height: 480px;
+    // margin: 10px;
     padding: 5px;
     border-radius: 5px;
     p {
         margin-bottom: 5px;
     }
+}
+
+.fa-spin {
+    visibility: hidden;
+    color: red;
 }

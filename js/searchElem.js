@@ -4,16 +4,18 @@ export default class SearchElem {
 
     constructor() {
         this.renderSearchBox();
-
+        this.nextPageToken = 
         this.searchResultList;
         this.haveData = new Event('gotResponse');
 
         this.searchButton.addEventListener('click', () => {
+            this.startSpinner();
             this.makeRequest();
         });
 
         this.searchBox.addEventListener('keypress', (event) => {
             if(event.keyCode == '13') {
+                this.startSpinner();
                 this.makeRequest();
             }            
         });
@@ -27,7 +29,7 @@ export default class SearchElem {
         search(this.createUrl())
             .then((response) => {
                 this.searchResultList = JSON.parse(response);
-                // console.log(this.searchResultList);
+                this.nextPageToken = this.searchResultList.nextPageToken;
                 document.dispatchEvent(this.haveData);
             })
             .catch((err) => {
@@ -49,11 +51,17 @@ export default class SearchElem {
 
     createUrl() {
 
-        // console.log(this.searchBox.value);
         const q = '&q=' + this.searchBox.value;
-        const partOfUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyDoT9Nw1mPXiXSTAbivHpp7zaXB9cPs6UI&type=video&maxResults=16';
-        // console.log(partOfUrl + q);
+        const partOfUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyDoT9Nw1mPXiXSTAbivHpp7zaXB9cPs6UI&type=video&maxResults=12';
         return partOfUrl + q;
+    }
+
+    startSpinner() {
+        document.getElementsByClassName('fa-spinner')[0].style.visibility = 'visible';
+    }
+
+    stopSpinner() {
+        document.getElementsByClassName('fa-spinner')[0].style.visibility = 'hidden';
     }
 
 }

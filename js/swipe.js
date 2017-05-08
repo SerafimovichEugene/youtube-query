@@ -1,14 +1,7 @@
 export default class Swipe {
 
     constructor() {
-        this.currentElem = document.getElementsByClassName('currentYoutubeElem')[0];
-        this.currentElemNum = 0;
-        this.numOfSwipes = document.getElementById('youtubeElemsWrapper').children.length - 1;
-        this.fromRigth = this.numOfSwipes;
-        this.fromLeft = 0;
-
-
-        // console.log(this.currentElemNum);
+        
         this.touchStartCoords = {
             'x': -1,
             'y': -1
@@ -24,10 +17,36 @@ export default class Swipe {
         this.startTime = 0; // Time on swipeStart
         this.elapsedTime = 0; // Elapsed time between swipeStart and swipeEnd
 
+        this.endOfPage = new Event('endOfPage');
+
+        this.updateSwipe();
+        this.setSwipe();
+
+    }
+
+    updateSwipe() {
+        this.currentElem = document.getElementsByClassName('currentYoutubeElem')[0];
+        this.currentElemNum = 0;
+        this.numOfSwipes = document.getElementById('youtubeElemsWrapper').children.length - 1;
+        this.fromRigth = this.numOfSwipes;
+        this.fromLeft = 0;
+    }
+
+    setSwipe() {
+
+        this.addMultipleListeners(document.getElementById('youtubeElemsWrapper'), 'mousedown touchstart', () => {
+            this.swipeStart();
+        });
+        this.addMultipleListeners(document.getElementById('youtubeElemsWrapper'), 'mousemove touchmove', () => {
+            this.swipeMove();
+        });
+        this.addMultipleListeners(document.getElementById('youtubeElemsWrapper'), 'mouseup touchend', () => {
+            this.swipeEnd();
+        });
     }
 
     toLeft() {
-
+        // console.log(this.fromRigth);
         if (this.fromRigth) {
             this.currentElem.className = 'moveToLeft';
             this.currentElemNum += 1;
@@ -35,10 +54,14 @@ export default class Swipe {
             this.currentElem = document.getElementsByClassName('currentYoutubeElem')[0];
             this.fromRigth -= 1;
             this.fromLeft += 1;
+        } else {
+            document.dispatchEvent(this.endOfPage);
         }
+
     }
 
     toRight() {
+        // console.log(this.fromLeft);
         if (this.fromLeft) {
             this.currentElem.className = 'moveToRight';
             this.currentElemNum -= 1;
@@ -47,8 +70,8 @@ export default class Swipe {
             this.fromRigth += 1;
             this.fromLeft -= 1;
         }
-    }
 
+    }
 
     swipeStart(e) {
         e = e ? e : window.event;
@@ -79,11 +102,9 @@ export default class Swipe {
                 this.direction = (this.touchEndCoords.x < 0) ? 'left' : 'right';
                 switch (this.direction) {
                     case 'left':
-                        console.log('to Left');
                         this.toLeft();
                         break;
                     case 'right':
-                        console.log('to Right');
                         this.toRight();
                         break;
                 }
@@ -94,8 +115,9 @@ export default class Swipe {
     addMultipleListeners(elem, events, handler) {
         const eventsArr = events.split(' ');
         for (let i = 0; i < eventsArr.length; i++) {
-
             elem.addEventListener(eventsArr[i], handler);
         }
     }
+
+
 }

@@ -7,6 +7,9 @@ export default class YoutubeElems {
         this.youtubeElems = [];
         this.statisticsObj;
         this.gotStatistic = new Event('gotStatistic');
+        this.onRender = new Event('onRender');
+
+        this.renderYoutubeElemsWrapper();
     }
 
     createYoutubeElemsList(searchResultList) {
@@ -41,11 +44,10 @@ export default class YoutubeElems {
             .then((response) => {
                 this.statisticsObj = JSON.parse(response);
                 this.updateYoutubeElems();
-                // console.log(this.youtubeElems);
                 document.dispatchEvent(this.gotStatistic);
             })
             .catch((err) => {
-                // console.log(err.statusText);
+                console.log(err.statusText);
             });
     }
 
@@ -62,20 +64,17 @@ export default class YoutubeElems {
 
     renderYoutubeElemsWrapper() {
 
-        let youtubeElemsWrapper = document.createElement('div');
-        youtubeElemsWrapper.id = 'youtubeElemsWrapper';
-        document.body.appendChild(youtubeElemsWrapper);
+        this.youtubeElemsWrapper = document.createElement('div');
+        this.youtubeElemsWrapper.id = 'youtubeElemsWrapper';
+        document.body.appendChild(this.youtubeElemsWrapper);
     }
 
-    renderYoutubeElems() {
+    renderYoutubeElems(slice) {
 
-        const chunks = _.chunk(this.youtubeElems, 4);
-        // console.log(chunks);
-
+        this.youtubeElemsWrapper.innerHTML = '';
+        const chunks = _.chunk(this.youtubeElems, slice);
         _.forEach(chunks, (chunk) => {
-
             let ul = document.createElement('ul');
-
             _.forEach(chunk, (elem) => {
                 const youtubeElem = new YoutubeElem(
                     elem.thumbnails.medium.url,
@@ -85,23 +84,51 @@ export default class YoutubeElems {
                     elem.publishedAt,
                     elem.description
                 );
-                
                 ul.appendChild(youtubeElem.renderYoutubeElem());
-
             });
-            
-            document.getElementById('youtubeElemsWrapper').appendChild(ul);
+            this.youtubeElemsWrapper.appendChild(ul);
+
         });
-        document.getElementById('youtubeElemsWrapper').firstChild.className = 'currentYoutubeElem';
-        
-        // console.log(document.getElementById('youtubeElemsWrapper').children);
-        
+        if (this.youtubeElemsWrapper.firstChild) {
+            this.youtubeElemsWrapper.firstChild.className = 'currentYoutubeElem';
+            document.dispatchEvent(this.onRender);
+        }
     }
 
     clearYoutubeElemsList() {
-
         this.youtubeElems = [];
         document.getElementById('youtubeElemsWrapper').innerHTML = '';
+    }
+
+    handleWidthChange() {
+
+        let flag = false;
+        if (window.innerWidth < 750 && this.width !== 'XS') {
+            this.width = 'XS';
+            this.slice = 1;
+            // console.log('XS');
+            flag = true;
+        } else if (window.innerWidth > 750 && window.innerWidth < 1110 && this.width !== 'S') {
+            this.width = 'S';
+            this.slice = 2;
+            // console.log('S');
+            flag = true;
+        } else if (window.innerWidth > 1110 && window.innerWidth < 1470 && this.width !== 'L') {
+            this.width = 'L';
+            this.slice = 3;
+            // console.log('L');
+            flag = true;
+        } else if (window.innerWidth > 1470 && this.width !== 'XL') {
+            this.width = 'XL';
+            this.slice = 4;
+            // console.log('XL');
+            flag = true;
+        }
+        if (flag) {
+            this.renderYoutubeElems(this.slice);
+            flag = false;
+        }
+
     }
 
 };
@@ -145,9 +172,8 @@ class YoutubeElem {
         publishDate.innerHTML = this.publishDate;
         youtubeElem.appendChild(publishDate);
 
-        let description = document.createElement('p');        
+        let description = document.createElement('p');
         description.innerHTML = this.description;
-        // description.className = 'block-with-text';
         youtubeElem.appendChild(description);
 
         let li = document.createElement('li');

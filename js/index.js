@@ -4,22 +4,29 @@ import Swipe from './swipe';
 
 const searchElem = new SearchElem();
 const youtubeElems = new YoutubeElems();
-let swipeObj;
+const swipeObj = new Swipe();
 
-youtubeElems.renderYoutubeElemsWrapper();
+window.addEventListener('resize', () => {
+    youtubeElems.handleWidthChange.call(youtubeElems);
+});
 
 document.addEventListener('gotResponse', () => {
     youtubeElems.clearYoutubeElemsList();
     youtubeElems.createYoutubeElemsList(searchElem.searchResultList);
+    
 });
 
 document.addEventListener('gotStatistic', () => {
-    youtubeElems.renderYoutubeElems();
-    swipeObj = new Swipe();
-    _.forEach(document.getElementsByTagName('ul'), (value) => {
-        swipeObj.addMultipleListeners(value, 'mousedown touchstart', () => {swipeObj.swipeStart()});
-        swipeObj.addMultipleListeners(value, 'mousemove touchmove', () => {swipeObj.swipeMove()});
-        swipeObj.addMultipleListeners(value, 'mouseup touchend', () => {swipeObj.swipeEnd()});
+    youtubeElems.renderYoutubeElems(3);
+    
+});
 
-    });
+document.addEventListener('onRender', () => { 
+    
+    searchElem.stopSpinner();
+    swipeObj.updateSwipe();
+});
+
+document.addEventListener('endOfPage', ()=>{
+    console.log('endOfPage');
 });
