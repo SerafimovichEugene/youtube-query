@@ -5,14 +5,18 @@ export default class YoutubeElems {
 
     constructor() {
         this.youtubeElems = [];
+
         this.statisticsObj;
+        this.currentYoutubeElem;
+
         this.gotStatistic = new Event('gotStatistic');
         this.onRender = new Event('onRender');
 
         this.renderYoutubeElemsWrapper();
+        this.handleWidthChange();
     }
 
-    createYoutubeElemsList(searchResultList) {
+    fillYoutubeElemsList(searchResultList) {
 
         _.forEach(searchResultList.items, (value) => {
             this.youtubeElems.push({
@@ -31,9 +35,15 @@ export default class YoutubeElems {
 
         const partOfUrl = "https://www.googleapis.com/youtube/v3/videos?part=statistics&key=AIzaSyDoT9Nw1mPXiXSTAbivHpp7zaXB9cPs6UI&id=";
         let videoIdArray = [];
-        _.forEach(this.youtubeElems, (value) => {
+
+
+        _.forEach(_.takeRight(this.youtubeElems, 12), (value) => {
             videoIdArray.push(value.videoId);
-        });
+        });;
+
+        // _.forEach(chunkFromRigth, (value) => {
+        //     videoIdArray.push(value.videoId);
+        // });
         const ids = videoIdArray.join(',');
         return partOfUrl + ids;
     }
@@ -54,7 +64,7 @@ export default class YoutubeElems {
     updateYoutubeElems() {
 
         _.forEach(this.statisticsObj.items, (item) => {
-            _.forEach(this.youtubeElems, (elem) => {
+            _.forEach(_.takeRight(this.youtubeElems, 12), (elem) => {
                 if (item.id == elem.videoId) {
                     elem['viewCount'] = item.statistics.viewCount;
                 }
@@ -89,11 +99,17 @@ export default class YoutubeElems {
             this.youtubeElemsWrapper.appendChild(ul);
 
         });
-        if (this.youtubeElemsWrapper.firstChild) {
+        if (this.youtubeElemsWrapper.children) {
             this.youtubeElemsWrapper.firstChild.className = 'currentYoutubeElem';
             document.dispatchEvent(this.onRender);
         }
     }
+
+    renederNextPageYoutubeElems() {
+
+    }
+
+
 
     clearYoutubeElemsList() {
         this.youtubeElems = [];
@@ -106,25 +122,25 @@ export default class YoutubeElems {
         if (window.innerWidth < 750 && this.width !== 'XS') {
             this.width = 'XS';
             this.slice = 1;
-            // console.log('XS');
+            console.log('XS');
             flag = true;
         } else if (window.innerWidth > 750 && window.innerWidth < 1110 && this.width !== 'S') {
             this.width = 'S';
             this.slice = 2;
-            // console.log('S');
+            console.log('S');
             flag = true;
         } else if (window.innerWidth > 1110 && window.innerWidth < 1470 && this.width !== 'L') {
             this.width = 'L';
             this.slice = 3;
-            // console.log('L');
+            console.log('L');
             flag = true;
         } else if (window.innerWidth > 1470 && this.width !== 'XL') {
             this.width = 'XL';
             this.slice = 4;
-            // console.log('XL');
+            console.log('XL');
             flag = true;
         }
-        if (flag) {
+        if (flag && this.youtubeElems.length) {
             this.renderYoutubeElems(this.slice);
             flag = false;
         }

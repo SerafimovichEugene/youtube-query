@@ -12,13 +12,12 @@ window.addEventListener('resize', () => {
 
 document.addEventListener('gotResponse', () => {
     youtubeElems.clearYoutubeElemsList();
-    youtubeElems.createYoutubeElemsList(searchElem.searchResultList);
+    youtubeElems.fillYoutubeElemsList(searchElem.searchResultList);
     
 });
 
 document.addEventListener('gotStatistic', () => {
-    youtubeElems.renderYoutubeElems(3);
-    
+    youtubeElems.renderYoutubeElems(youtubeElems.slice);
 });
 
 document.addEventListener('onRender', () => { 
@@ -29,4 +28,13 @@ document.addEventListener('onRender', () => {
 
 document.addEventListener('endOfPage', ()=>{
     console.log('endOfPage');
+
+    searchElem.makeRequestNextPage();
+});
+
+document.addEventListener('nextPage', () => {
+    
+    youtubeElems.fillYoutubeElemsList(searchElem.searchResultList);
+    console.log(searchElem.searchResultList);
+    console.log(youtubeElems.youtubeElems);
 });
