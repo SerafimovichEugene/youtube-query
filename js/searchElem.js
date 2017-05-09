@@ -87,5 +87,4 @@ export default class SearchElem {
     stopSpinner() {
         document.getElementsByClassName('fa-spinner')[0].style.visibility = 'hidden';
     }
-
 }

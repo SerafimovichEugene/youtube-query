@@ -116,6 +116,7 @@ export default class YoutubeElems {
 
     clearYoutubeElemsList() {
         this.youtubeElems = [];
+        this.currentPage = 0;
         document.getElementById('youtubeElemsWrapper').innerHTML = '';
     }
 

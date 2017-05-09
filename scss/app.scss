@@ -115,13 +115,16 @@ ul {
 .youtubeElem {
     display: block;
     background-color: $youtubeElemBackground;
-    width: 330px; // height: 480px;
-    // margin: 10px;
+    width: 330px; 
+    height: 470px;
     padding: 5px;
     border-radius: 5px;
+
     p {
-        margin-bottom: 5px;
+        margin-bottom: 15px;
+        margin-top: 5px;
     }
+    
     .videoId{
         display: none;
     }

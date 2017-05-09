@@ -22,7 +22,6 @@ document.addEventListener('gotStatistic', () => {
     if(youtubeElems.youtubeElems.length > 12) {
         swipeObj.toLeft();
     }
-
 });
 
 document.addEventListener('onRender', () => { 
@@ -39,12 +38,11 @@ document.addEventListener('toRight', () => {
 });
 
 document.addEventListener('endOfPage', () => {
-    console.log('endOfPage');
+
     searchElem.makeRequestNextPage();
 });
 
 document.addEventListener('nextPage', () => {
     
     youtubeElems.fillYoutubeElemsList(searchElem.searchResultList);
-
 });

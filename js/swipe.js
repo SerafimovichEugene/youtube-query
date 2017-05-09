@@ -16,12 +16,9 @@ export default class Swipe {
         this.maxAllowedTime = 10000; 
         this.startTime = 0; 
         this.elapsedTime = 0; 
-
-
         this.onToLeft = new Event('toLeft');
         this.onToRight = new Event('toRight');
         this.endOfPage = new Event('endOfPage');
-
         this.updateSwipe();
         this.setSwipe();
     }
@@ -55,7 +52,6 @@ export default class Swipe {
             this.currentElem = document.getElementsByClassName('currentYoutubeElem')[0];
             this.fromRigth -= 1;
             this.fromLeft += 1;
-
             document.dispatchEvent(this.onToLeft);
         } else {
             document.dispatchEvent(this.endOfPage);
