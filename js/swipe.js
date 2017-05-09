@@ -1,35 +1,36 @@
 export default class Swipe {
 
     constructor() {
-        
+
         this.touchStartCoords = {
             'x': -1,
             'y': -1
-        }; // X and Y coordinates on mousedown or touchstart events.
+        }; 
         this.touchEndCoords = {
             'x': -1,
             'y': -1
-        }; // X and Y coordinates on mouseup or touchend events.
-        this.direction = 'undefined'; // Swipe direction
-        this.minDistanceXAxis = 30; // Min distance on mousemove or touchmove on the X axis
-        this.maxDistanceYAxis = 30; // Max distance on mousemove or touchmove on the Y axis
-        this.maxAllowedTime = 10000; // Max allowed time between swipeStart and swipeEnd
-        this.startTime = 0; // Time on swipeStart
-        this.elapsedTime = 0; // Elapsed time between swipeStart and swipeEnd
+        }; 
+        this.direction = 'undefined'; 
+        this.minDistanceXAxis = 30; 
+        this.maxDistanceYAxis = 30; 
+        this.maxAllowedTime = 10000; 
+        this.startTime = 0; 
+        this.elapsedTime = 0; 
 
+
+        this.onToLeft = new Event('toLeft');
+        this.onToRight = new Event('toRight');
         this.endOfPage = new Event('endOfPage');
 
         this.updateSwipe();
         this.setSwipe();
-
     }
 
-    updateSwipe() {
+    updateSwipe(fromLeft, fromRight, currentPage) {
         this.currentElem = document.getElementsByClassName('currentYoutubeElem')[0];
-        this.currentElemNum = 0;
-        this.numOfSwipes = document.getElementById('youtubeElemsWrapper').children.length - 1;
-        this.fromRigth = this.numOfSwipes;
-        this.fromLeft = 0;
+        this.currentElemNum = currentPage;
+        this.fromRigth = fromRight;
+        this.fromLeft = fromLeft;
     }
 
     setSwipe() {
@@ -46,7 +47,7 @@ export default class Swipe {
     }
 
     toLeft() {
-        // console.log(this.fromRigth);
+
         if (this.fromRigth) {
             this.currentElem.className = 'moveToLeft';
             this.currentElemNum += 1;
@@ -54,14 +55,15 @@ export default class Swipe {
             this.currentElem = document.getElementsByClassName('currentYoutubeElem')[0];
             this.fromRigth -= 1;
             this.fromLeft += 1;
+
+            document.dispatchEvent(this.onToLeft);
         } else {
             document.dispatchEvent(this.endOfPage);
         }
-
     }
 
     toRight() {
-        // console.log(this.fromLeft);
+
         if (this.fromLeft) {
             this.currentElem.className = 'moveToRight';
             this.currentElemNum -= 1;
@@ -69,8 +71,9 @@ export default class Swipe {
             this.currentElem = document.getElementsByClassName('currentYoutubeElem')[0];
             this.fromRigth += 1;
             this.fromLeft -= 1;
-        }
 
+            document.dispatchEvent(this.onToRight);
+        }
     }
 
     swipeStart(e) {
@@ -118,6 +121,4 @@ export default class Swipe {
             elem.addEventListener(eventsArr[i], handler);
         }
     }
-
-
 }

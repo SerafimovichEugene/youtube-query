@@ -17,24 +17,34 @@ document.addEventListener('gotResponse', () => {
 });
 
 document.addEventListener('gotStatistic', () => {
+
     youtubeElems.renderYoutubeElems(youtubeElems.slice);
+    if(youtubeElems.youtubeElems.length > 12) {
+        swipeObj.toLeft();
+    }
+
 });
 
 document.addEventListener('onRender', () => { 
-    
     searchElem.stopSpinner();
-    swipeObj.updateSwipe();
+    swipeObj.updateSwipe(youtubeElems.fromLeft, youtubeElems.fromRight, youtubeElems.currentPage);
 });
 
-document.addEventListener('endOfPage', ()=>{
-    console.log('endOfPage');
+document.addEventListener('toLeft', () => {
+    youtubeElems.updateCurrentPage(1);
+});
 
+document.addEventListener('toRight', () => {
+    youtubeElems.updateCurrentPage(-1);
+});
+
+document.addEventListener('endOfPage', () => {
+    console.log('endOfPage');
     searchElem.makeRequestNextPage();
 });
 
 document.addEventListener('nextPage', () => {
     
     youtubeElems.fillYoutubeElemsList(searchElem.searchResultList);
-    console.log(searchElem.searchResultList);
-    console.log(youtubeElems.youtubeElems);
+
 });

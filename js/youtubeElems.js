@@ -5,15 +5,15 @@ export default class YoutubeElems {
 
     constructor() {
         this.youtubeElems = [];
-
         this.statisticsObj;
-        this.currentYoutubeElem;
-
+        this.currentVideId;
+        this.currentPage = 0;
+        this.pagesCount;
+        this.fromLeft = 0;
         this.gotStatistic = new Event('gotStatistic');
         this.onRender = new Event('onRender');
-
-        this.renderYoutubeElemsWrapper();
-        this.handleWidthChange();
+        this.renderYoutubeElemsWrapper(); //main Wrapper
+        this.handleWidthChange(); //to init this.slice;
     }
 
     fillYoutubeElemsList(searchResultList) {
@@ -35,15 +35,9 @@ export default class YoutubeElems {
 
         const partOfUrl = "https://www.googleapis.com/youtube/v3/videos?part=statistics&key=AIzaSyDoT9Nw1mPXiXSTAbivHpp7zaXB9cPs6UI&id=";
         let videoIdArray = [];
-
-
         _.forEach(_.takeRight(this.youtubeElems, 12), (value) => {
             videoIdArray.push(value.videoId);
-        });;
-
-        // _.forEach(chunkFromRigth, (value) => {
-        //     videoIdArray.push(value.videoId);
-        // });
+        });
         const ids = videoIdArray.join(',');
         return partOfUrl + ids;
     }
@@ -81,12 +75,14 @@ export default class YoutubeElems {
 
     renderYoutubeElems(slice) {
 
+        this.pagesCount = this.youtubeElems.length / slice;
         this.youtubeElemsWrapper.innerHTML = '';
         const chunks = _.chunk(this.youtubeElems, slice);
         _.forEach(chunks, (chunk) => {
             let ul = document.createElement('ul');
             _.forEach(chunk, (elem) => {
                 const youtubeElem = new YoutubeElem(
+                    elem.videoId,
                     elem.thumbnails.medium.url,
                     elem.title,
                     elem.author,
@@ -97,19 +93,26 @@ export default class YoutubeElems {
                 ul.appendChild(youtubeElem.renderYoutubeElem());
             });
             this.youtubeElemsWrapper.appendChild(ul);
-
         });
-        if (this.youtubeElemsWrapper.children) {
-            this.youtubeElemsWrapper.firstChild.className = 'currentYoutubeElem';
-            document.dispatchEvent(this.onRender);
+        //remember current page with first videoId
+        for (let i = 0; i < chunks.length; i++) {
+            for (let j = 0; j < chunks[i].length; j++) {
+                if (this.currentVideId == chunks[i][j].videoId) {
+                    this.currentPage = i;
+                    break;
+                }
+            }
         }
+        this.fromLeft = this.currentPage;
+        this.fromRight = this.pagesCount - 1 - this.fromLeft;
+        //redefine classes
+        for (let i = 0; i < this.currentPage; i++) {
+            this.youtubeElemsWrapper.children[i].className = 'moveToLeft';
+        }
+        this.youtubeElemsWrapper.children[this.currentPage].className = 'currentYoutubeElem';
+        this.currentVideId = document.querySelector('.currentYoutubeElem li .videoId').innerHTML;
+        document.dispatchEvent(this.onRender);
     }
-
-    renederNextPageYoutubeElems() {
-
-    }
-
-
 
     clearYoutubeElemsList() {
         this.youtubeElems = [];
@@ -122,22 +125,22 @@ export default class YoutubeElems {
         if (window.innerWidth < 750 && this.width !== 'XS') {
             this.width = 'XS';
             this.slice = 1;
-            console.log('XS');
+            // console.log('XS');
             flag = true;
         } else if (window.innerWidth > 750 && window.innerWidth < 1110 && this.width !== 'S') {
             this.width = 'S';
             this.slice = 2;
-            console.log('S');
+            // console.log('S');
             flag = true;
         } else if (window.innerWidth > 1110 && window.innerWidth < 1470 && this.width !== 'L') {
             this.width = 'L';
             this.slice = 3;
-            console.log('L');
+            // console.log('L');
             flag = true;
         } else if (window.innerWidth > 1470 && this.width !== 'XL') {
             this.width = 'XL';
             this.slice = 4;
-            console.log('XL');
+            // console.log('XL');
             flag = true;
         }
         if (flag && this.youtubeElems.length) {
@@ -147,12 +150,17 @@ export default class YoutubeElems {
 
     }
 
+    updateCurrentPage(arg) {
+        this.currentPage += arg;
+        this.currentVideId = document.querySelector('.currentYoutubeElem li .videoId').innerHTML;
+    }
 };
 
 
 class YoutubeElem {
 
-    constructor(thumbnail, title, author, viewCount, publishDate, description) {
+    constructor(videoId, thumbnail, title, author, viewCount, publishDate, description) {
+        this.videoId = videoId;
         this.thumbnail = thumbnail;
         this.title = title;
         this.author = author;
@@ -165,6 +173,11 @@ class YoutubeElem {
 
         let youtubeElem = document.createElement('div');
         youtubeElem.className = 'youtubeElem';
+
+        let videoId = document.createElement('div');
+        videoId.className = 'videoId';
+        videoId.innerHTML = this.videoId;
+        youtubeElem.appendChild(videoId);
 
         let thumbnail = document.createElement('p');
         let thumbnailImg = document.createElement('img');

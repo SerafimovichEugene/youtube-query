@@ -72,7 +72,6 @@ export default class SearchElem {
     createUrlNextPage() {
         let nextPageToken;
         if(this.nextPageToken) {
-            console.log(this.nextPageToken);
             nextPageToken = 'pageToken=' + this.nextPageToken;
         }
         const q = '&q=' + this.searchBox.value;
