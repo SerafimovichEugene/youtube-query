@@ -3,38 +3,38 @@ import YoutubeElems from './youtubeElems';
 import Swipe from './swipe';
 
 const searchElem = new SearchElem();
-const youtubeElems = new YoutubeElems();
+const youtubeElemsObj = new YoutubeElems();
 const swipeObj = new Swipe();
 
 window.addEventListener('resize', () => {
-    youtubeElems.handleWidthChange.call(youtubeElems);
+    youtubeElemsObj.handleWidthChange.call(youtubeElemsObj);
 });
 
 document.addEventListener('gotResponse', () => {
-    youtubeElems.clearYoutubeElemsList();
-    youtubeElems.fillYoutubeElemsList(searchElem.searchResultList);
+    youtubeElemsObj.clearYoutubeElemsList();
+    youtubeElemsObj.fillYoutubeElemsList(searchElem.searchResultList);
     
 });
 
 document.addEventListener('gotStatistic', () => {
 
-    youtubeElems.renderYoutubeElems(youtubeElems.slice);
-    if(youtubeElems.youtubeElems.length > 12) {
+    youtubeElemsObj.renderYoutubeElems(youtubeElemsObj.slice);
+    if(youtubeElemsObj.youtubeElems.length > 12) {
         swipeObj.toLeft();
     }
 });
 
 document.addEventListener('onRender', () => { 
     searchElem.stopSpinner();
-    swipeObj.updateSwipe(youtubeElems.fromLeft, youtubeElems.fromRight, youtubeElems.currentPage);
+    swipeObj.updateSwipe(youtubeElemsObj.fromLeft, youtubeElemsObj.fromRight, youtubeElemsObj.currentPage);
 });
 
 document.addEventListener('toLeft', () => {
-    youtubeElems.updateCurrentPage(1);
+    youtubeElemsObj.updateCurrentPage(1);
 });
 
 document.addEventListener('toRight', () => {
-    youtubeElems.updateCurrentPage(-1);
+    youtubeElemsObj.updateCurrentPage(-1);
 });
 
 document.addEventListener('endOfPage', () => {
@@ -44,5 +44,5 @@ document.addEventListener('endOfPage', () => {
 
 document.addEventListener('nextPage', () => {
     
-    youtubeElems.fillYoutubeElemsList(searchElem.searchResultList);
+    youtubeElemsObj.fillYoutubeElemsList(searchElem.searchResultList);
 });

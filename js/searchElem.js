@@ -4,6 +4,7 @@ export default class SearchElem {
 
     constructor() {
         this.renderSearchBox();
+        this.renderSpinner();
         this.nextPageToken;
         this.searchResultList;
         this.gotResponse = new Event('gotResponse');
@@ -12,7 +13,6 @@ export default class SearchElem {
         this.searchButton.addEventListener('click', () => {
             this.makeRequest();
         });
-
         this.searchBox.addEventListener('keypress', (event) => {
             if(event.keyCode == '13') {
                 this.makeRequest();
@@ -55,11 +55,20 @@ export default class SearchElem {
         this.searchBox = document.createElement('input');
         this.searchButton = document.createElement('input');
         this.searchBox.id = 'searchBox';
+        this.searchBox.placeholder = 'Enter query';
         this.searchButton.type = 'button';
         this.searchButton.value = 'Search';
         this.searchButton.id = 'searchButton';
         document.body.appendChild(this.searchBox);
         document.body.appendChild(this.searchButton);
+        
+    }
+
+    renderSpinner() {
+        this.spinner = document.createElement('p');
+        this.spinner.id = 'spinner';
+        this.spinner.innerHTML = '<i class="fa fa-spinner fa-4x fa-spin" ></i>';
+        document.body.appendChild(this.spinner);
     }
 
     createUrl() {

@@ -83,8 +83,8 @@ export default class Swipe {
     }
 
     swipeMove(e) {
-        e = e ? e : window.event;
-        e.preventDefault();
+        // e = e ? e : window.event;
+        // e.preventDefault();
     }
 
     swipeEnd(e) {

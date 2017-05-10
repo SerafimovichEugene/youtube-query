@@ -13,6 +13,8 @@ input {
 
 #searchBox {
     margin: 0 auto;
+    height: 30px;
+    padding-left: 10px;
     display: inline-block;
     overflow: hidden;
     width: 70%;
@@ -23,6 +25,7 @@ input {
 
 #searchButton {
     margin: 0 auto;
+    height: 34px;
     display: inline-block;
     width: 80px;
     font-size: 14pt;
@@ -30,10 +33,23 @@ input {
     border: 1px solid black;
 }
 
+#spinner {
+    margin: 0 auto;
+}
+
 #youtubeElemsWrapper {
-    margin: 10px auto;
+    margin: 0 auto;
     position: relative;
     height: 500px;
+    ul.currentYoutubeElem {
+        z-index: 5;
+    }
+    ul.moveToRight {
+        z-index: 3;
+    }
+    ul.moveToLeft {
+        z-index: 3;
+    }
 }
 
 ul {
@@ -42,13 +58,12 @@ ul {
     left: 0;
     padding-left: 0;
     overflow: hidden;
-    text-align: center;
     list-style-type: none;
     li {
         display: inline-block;
         vertical-align: top;
-        padding: 10px; // width: 25%;
-        // max-width: 330px; 
+        padding: 10px;
+        max-width: 330px;
         transform: translateX(600%);
         transition: opacity 0.2s linear;
     }
@@ -115,19 +130,26 @@ ul {
 .youtubeElem {
     display: block;
     background-color: $youtubeElemBackground;
-    width: 330px; 
-    height: 470px;
+    width: 330px;
+    height: 460px;
     padding: 5px;
     border-radius: 5px;
-
     p {
         margin-bottom: 15px;
         margin-top: 5px;
     }
-    
-    .videoId{
+    .videoId {
         display: none;
     }
+    .author, .viewCount, .publishDate {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    .description {
+        text-align: left;
+        font-style: italic;
+    }
+
 }
 
 .fa-spin {
