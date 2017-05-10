@@ -1,4 +1,4 @@
-youtube query project
+Simple web application that can make youtube query to search.
 
 [youtube-query page](https://serafimovicheugene.github.io/youtube-query/) 
 
