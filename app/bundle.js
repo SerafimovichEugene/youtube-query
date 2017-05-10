@@ -586,9 +586,9 @@ class SearchElem {
             this.makeRequest();
         });
         this.searchBox.addEventListener('keypress', (event) => {
-            if(event.keyCode == '13') {
+            if (event.keyCode == '13') {
                 this.makeRequest();
-            }            
+            }
         });
     }
 
@@ -633,18 +633,22 @@ class SearchElem {
         this.searchButton.id = 'searchButton';
         document.body.appendChild(this.searchBox);
         document.body.appendChild(this.searchButton);
-        
+
     }
 
     renderSpinner() {
         this.spinner = document.createElement('p');
         this.spinner.id = 'spinner';
-        this.spinner.innerHTML = '<i class="fa fa-spinner fa-4x fa-spin" ></i>';
+        this.spinner.innerHTML = '<i class="fa fa-spinner fa-2x fa-spin" ></i>';
         document.body.appendChild(this.spinner);
+        let swipeInfo = document.createElement('p');
+        swipeInfo.id = 'swipeInfo';
+        swipeInfo.innerHTML = 'swipe left/rigth to turn page';
+        document.body.appendChild(swipeInfo);
     }
 
     createUrl() {
-        
+
         const q = '&q=' + this.searchBox.value;
         const partOfUrl = 'https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyDoT9Nw1mPXiXSTAbivHpp7zaXB9cPs6UI&type=video&maxResults=12';
         return partOfUrl + q;
@@ -652,7 +656,7 @@ class SearchElem {
 
     createUrlNextPage() {
         let nextPageToken;
-        if(this.nextPageToken) {
+        if (this.nextPageToken) {
             nextPageToken = 'pageToken=' + this.nextPageToken;
         }
         const q = '&q=' + this.searchBox.value;
@@ -887,7 +891,6 @@ class YoutubeElem {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_chunk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_lodash_chunk__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_clone__ = __webpack_require__(136);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_clone___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash_clone__);
-// import _ from "lodash";
 
 
 
