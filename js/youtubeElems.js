@@ -1,4 +1,3 @@
-import search from './search';
 import YoutubeElem from './youtubeElem.js';
 
 import _forEach from 'lodash/forEach';
@@ -49,14 +48,17 @@ export default class YoutubeElems {
 
     getStatistics() {
 
-        search(this.createUrl())
+        fetch(this.createUrl())
             .then((response) => {
-                this.statisticsObj = JSON.parse(response);
+                return response.json();
+            })
+            .then((json => {
+                this.statisticsObj = json;
                 this.updateYoutubeElems();
                 document.dispatchEvent(this.gotStatistic);
-            })
+            }))
             .catch((err) => {
-                console.log(err.statusText);
+                console.log(err.message);
             });
     }
 

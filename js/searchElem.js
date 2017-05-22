@@ -1,5 +1,3 @@
-import search from './search';
-
 export default class SearchElem {
 
     constructor() {
@@ -26,27 +24,34 @@ export default class SearchElem {
             return;
         }
         this.startSpinner();
-        search(this.createUrl())
+        fetch(this.createUrl())
             .then((response) => {
-                this.searchResultList = JSON.parse(response);
+                return response.json();
+            })
+            .then((json) => {
+                this.searchResultList = json;
                 this.nextPageToken = this.searchResultList.nextPageToken;
                 document.dispatchEvent(this.gotResponse);
             })
             .catch((err) => {
-                console.log(err.statusText);
+                console.log(err.message);
             });
+
     }
 
     makeRequestNextPage() {
         this.startSpinner();
-        search(this.createUrlNextPage())
+        fetch(this.createUrlNextPage())
             .then((response) => {
-                this.searchResultList = JSON.parse(response);
+                return response.json();
+            })
+            .then((json) => {
+                this.searchResultList = json;
                 this.nextPageToken = this.searchResultList.nextPageToken;
                 document.dispatchEvent(this.nextPage);
             })
             .catch((err) => {
-                console.log(err.statusText);
+                console.log(err.message);
             });
     }
 
